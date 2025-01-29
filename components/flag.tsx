@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function Flag({ country }: { country: Country }) {
     return (
         <Image
-            src={`/img/${country}.svg`}
+            src={`/img/${country}.jpeg`}
             alt=''
             width={25}
             height={12.5}

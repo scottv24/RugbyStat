@@ -22,7 +22,7 @@ export default function Home() {
             <div className='w-full grid  md:grid-cols-2 grid-cols-1 gap-6 pt-8 lg:px-64 sm:px-32 px-8 justify-items-center'>
                 <Card className='w-full bg-background  md:col-span-2 flex'>
                     <Image
-                        src='/img/URC.svg'
+                        src='/img/URC.png'
                         alt='URC logo'
                         width={50}
                         height={50}
