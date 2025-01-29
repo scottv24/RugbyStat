@@ -7,14 +7,21 @@ import Image from 'next/image'
 export default function Home() {
     return (
         <div>
-            <div className='w-full bg-background p-8  flex'>
+            <div className='w-full bg-background p-8  flex shadow-md'>
                 <h1 className='font-extrabold text-2xl flex justify-center items-center'>
                     <Image
                         src='/img/RugbyStat.png'
                         alt='Rugby Stat Logo'
                         width={50}
                         height={50}
-                        className='p-2'
+                        className='p-2 dark:hidden'
+                    />
+                    <Image
+                        src='/img/RugbyStatDark.png'
+                        alt='Rugby Stat Logo'
+                        width={50}
+                        height={50}
+                        className='p-2 dark:block hidden'
                     />{' '}
                     RugbyStat
                 </h1>
