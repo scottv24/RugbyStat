@@ -42,11 +42,14 @@ export default function Table() {
         <table className='w-full overflow-x-scroll table-fixed'>
             <thead>
                 <tr>
-                    <th scope='col' className='p-3 w-1/12'>
+                    <th scope='col' className='p-3 sm:w-1/12 w-1/6'>
                         #
                     </th>
                     <th scope='col' className='p-2'></th>
-                    <th scope='col' className='p-2 w-1/4'></th>
+                    <th
+                        scope='col'
+                        className='p-2 sm:w-1/4 w-1/3 sm:overflow-auto overflow-hidden'
+                    ></th>
                     <th scope='col' className='p-2'>
                         Pl
                     </th>
@@ -99,9 +102,12 @@ export default function Table() {
                             key={team.teamId}
                             className='group hover:bg-sky-900 hover: cursor-pointer'
                         >
-                            <th scope='row' className='p-3'>
+                            <th
+                                scope='row'
+                                className='sm:p-3 p-1 flex justify-center'
+                            >
                                 <div
-                                    className={`rounded-full p-2  ${
+                                    className={`rounded-full sm:p-2 w-1/2 ${
                                         team.position <= 4
                                             ? 'bg-green-800'
                                             : team.position <= 8
@@ -122,7 +128,7 @@ export default function Table() {
                                     width={30}
                                 />
                             </td>
-                            <td className=' group-hover:underline group-hover:font-semibold'>
+                            <td className=' group-hover:underline group-hover:font-semibold sm:overflow-auto overflow-hidden sm:text-wrap text-nowrap text-ellipsis'>
                                 {team.name}
                             </td>
                             <td className='p-2 text-center'>{team.played}</td>

@@ -43,7 +43,7 @@ export default function Home() {
                 </Card>
 
                 <Card>
-                    <h2>Table</h2>
+                    <h2 className='p-2'>Table</h2>
                     <Table />
                 </Card>
                 <Card>Fixtures & Results </Card>

@@ -27,6 +27,9 @@ export default {
                 4500: '4500ms',
                 4800: '4800ms',
             },
+            width: {
+                '1/9': '11.111111%',
+            },
         },
     },
     plugins: [require('tailwindcss-animation-delay')],

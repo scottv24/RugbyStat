@@ -9,7 +9,7 @@ export default function Card({
 }) {
     return (
         <div
-            className={`${className ? className : ''} w-full bg-background rounded-xl p-6 shadow-md overflow-x-auto`}
+            className={`${className ? className : ''} w-full bg-background rounded-xl sm:p-6 p-2 shadow-md overflow-x-auto`}
         >
             {children}
         </div>
