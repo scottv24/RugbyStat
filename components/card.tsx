@@ -1,15 +1,17 @@
 import { ReactNode } from 'react'
 
 export default function Card({
-  children,
-  className,
+    children,
+    className,
 }: {
-  children: ReactNode
-  className?: string
+    children: ReactNode
+    className?: string
 }) {
-  return (
-    <div className={`${className} w-full bg-background rounded-xl p-6`}>
-      {children}
-    </div>
-  )
+    return (
+        <div
+            className={`${className ? className : ''} w-full bg-background rounded-xl p-6 shadow-md overflow-x-auto`}
+        >
+            {children}
+        </div>
+    )
 }

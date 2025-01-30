@@ -26,7 +26,7 @@ export default function Home() {
                     RugbyStat
                 </h1>
             </div>
-            <div className='w-full grid  md:grid-cols-2 grid-cols-1 gap-6 pt-8 lg:px-64 sm:px-32 px-8 justify-items-center'>
+            <div className='w-full grid  md:grid-cols-2 grid-cols-1 gap-6 pt-8 lg:px-32 sm:px-16 px-8 justify-items-center'>
                 <Card className='w-full bg-background  md:col-span-2 flex'>
                     <Image
                         src='/img/URC.png'
