@@ -1,8 +1,7 @@
 /** Takes a date string input and returns a Date object for the first day of that week (at midnight).*/
-export function getLastMonday(date: string) {
-    const firstMatchDate = new Date(date)
-    const weekday = firstMatchDate.getDay()
-    const firstMonday = new Date(firstMatchDate)
+export function getLastMonday(date: Date) {
+    const weekday = date.getDay()
+    const firstMonday = new Date(date)
     firstMonday.setDate(firstMonday.getDate() - weekday + 1)
     firstMonday.setHours(0, 0, 0, 0)
     return firstMonday

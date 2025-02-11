@@ -30,7 +30,7 @@ export default function TableRow({ team }: { team: TeamTableInfo }) {
                     width={30}
                 />
             </td>
-            <td className=' group-hover:underline group-hover:font-semibold sm:overflow-auto overflow-hidden sm:text-wrap text-nowrap text-ellipsis'>
+            <td className=' group-hover:underline group-hover:font-semibold font-medium sm:overflow-auto overflow-hidden sm:text-wrap text-nowrap text-ellipsis'>
                 {team.name}
             </td>
             <td className='p-2 text-center text-clip overflow-hidden'>

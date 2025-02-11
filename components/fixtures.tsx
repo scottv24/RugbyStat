@@ -4,10 +4,14 @@ import { TeamResult } from '@/app/types'
 import { useFixtureList } from '@/lib/hooks'
 import Image from 'next/image'
 import { useState } from 'react'
+import WeekSelector from './weekSelector'
+import Spinner from './Spinner'
 
 export default function Fixtures() {
     const fixtures = useFixtureList()
     const [selectedWeek, setSelectedWeek] = useState<number>(0)
+    const firstDate = fixtures?.get(selectedWeek)?.firstDate
+    const lastDate = fixtures?.get(selectedWeek)?.lastDate
 
     const resultColors = (currentTeam: TeamResult, opposition: TeamResult) => {
         if (currentTeam.score > opposition.score)
@@ -17,71 +21,34 @@ export default function Fixtures() {
         return 'bg-black bg-opacity-20'
     }
 
-    if (!fixtures) return <div></div>
-    console.log(fixtures)
+    if (!fixtures)
+        return (
+            <div>
+                <Spinner />
+            </div>
+        )
+
     return (
         <div className='w-full flex flex-col'>
-            <div className='flex w-full items-center justify-center p-2'>
-                <button
-                    onClick={() => {
-                        if (selectedWeek > 0) setSelectedWeek(selectedWeek - 1)
-                    }}
-                    className={`${selectedWeek > 0 ? 'bg-blue-800 cursor-pointer' : 'bg-slate-600 cursor-default'} rounded-xl p-1 px-3 font-extrabold text-3xl`}
-                >
-                    ‹
-                </button>
-                <h3 className='p-3 font-semibold'>
-                    {fixtures
-                        .get(selectedWeek)
-                        ?.firstDate.toLocaleDateString('en-GB', {
-                            day: '2-digit',
-                            month: 'short',
-                        }) +
-                        ' - ' +
-                        fixtures
-                            .get(selectedWeek)
-                            ?.lastDate.toLocaleDateString('en-GB', {
-                                day: '2-digit',
-                                month: 'short',
-                            })}
-                </h3>
-                <button
-                    onClick={() => {
-                        setSelectedWeek(selectedWeek + 1)
-                    }}
-                    className='bg-blue-800 rounded-xl p-1 px-3 font-extrabold text-3xl'
-                >
-                    ›
-                </button>
-            </div>
+            <WeekSelector
+                setSelectedWeek={setSelectedWeek}
+                selectedWeek={selectedWeek}
+                numWeeks={fixtures.size}
+                firstDate={firstDate}
+                lastDate={lastDate}
+            />
             {fixtures.get(selectedWeek)?.fixtures.map((fixture, i) => (
                 <div
                     className='flex w-full justify-between border-t-2 border-slate-400 border-opacity-50 py-3 hover:bg-sky-900 hover:bg-opacity-40 hover:cursor-pointer'
                     key={i}
                 >
-                    <div className='flex w-1/3 gap-4 justify-end items-center'>
-                        <p className='justify-end text-right'>
-                            {fixture.homeTeam.name}
-                        </p>
-                        <Image
-                            src={fixture.homeTeam.imageUrls.ON_DARK}
-                            alt={`${fixture.homeTeam.name} Logo`}
-                            height={100}
-                            width={100}
-                            className='w-1/5 aspect-square'
-                        />
-                    </div>
+                    <HomeTeam team={fixture.homeTeam} home={true} />
                     <div className='w-1/4 flex flex-col items-center'>
-                        {fixture.status !== 'result' ? (
-                            <p className='text-center text-clip'>
-                                {new Date(fixture.date).toLocaleTimeString(
-                                    'en-GB',
-                                    { timeStyle: 'short' }
-                                )}
-                            </p>
-                        ) : (
-                            <p className='font-semibold'>FT</p>
-                        )}
+                        <FixtureTime
+                            status={fixture.status}
+                            date={fixture.date}
+                            minute={fixture.minute}
+                        />
                         <p className='text-center text-nowrap'>
                             {new Date(fixture.date).toLocaleDateString(
                                 'en-GB',
@@ -108,18 +75,55 @@ export default function Fixtures() {
                             </div>
                         )}
                     </div>
-                    <div className='flex w-1/3 gap-2 items-center'>
-                        <Image
-                            src={fixture.awayTeam.imageUrls.ON_DARK}
-                            alt={`${fixture.awayTeam.name} Logo`}
-                            height={100}
-                            width={100}
-                            className='w-1/5 aspect-square'
-                        />
-                        <p className='w-3/4'>{fixture.awayTeam.name}</p>
-                    </div>
+                    <HomeTeam team={fixture.awayTeam} home={false} />
                 </div>
             ))}
         </div>
     )
+}
+
+function HomeTeam({ team, home }: { team: TeamResult; home: boolean }) {
+    return (
+        <div
+            className={`${home ? 'justify-end' : ''} flex w-1/3 gap-4 items-center`}
+        >
+            {home && <p className='justify-end text-right'>{team.name}</p>}
+            {team.name !== 'TBC' && (
+                <Image
+                    src={team.imageUrls.ON_DARK}
+                    alt={`${team.name} Logo`}
+                    height={100}
+                    width={100}
+                    className='w-1/5 aspect-square'
+                />
+            )}
+            {!home && <p className='justify-end text-left'>{team.name}</p>}
+        </div>
+    )
+}
+
+function FixtureTime({
+    status,
+    date,
+    minute,
+}: {
+    status: string
+    date: Date
+    minute: number
+}) {
+    if (status === 'result') {
+        return <p className='text-center text-clip'>FT</p>
+    } else if (status === 'fixture') {
+        return (
+            <p className='text-center text-clip'>
+                {date.toLocaleTimeString('en-GB', { timeStyle: 'short' })}
+            </p>
+        )
+    } else {
+        return (
+            <p className='text-center text-clip bg-green-700 rounded-xl px-2 font-semibold'>
+                {minute}
+            </p>
+        )
+    }
 }

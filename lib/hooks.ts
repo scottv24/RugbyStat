@@ -1,4 +1,4 @@
-import { FixtureWeeksMap } from '@/app/types'
+import { FixtureWeeksMap, Fixture } from '@/app/types'
 import { useEffect, useState } from 'react'
 import { getWeeksBetween, getLastMonday } from './utils.ts/fixtures'
 
@@ -13,7 +13,12 @@ export function useFixtureList() {
                 'https://rugby-union-feeds.incrowdsports.com/v1/matches?&compId=1068&provider=rugbyviz&season=202401&images=true'
             )
             const fixturesRAW = await resp.json()
-            const fixtureList = fixturesRAW?.data
+            const fixtureList: Fixture[] = fixturesRAW?.data.map(
+                (fixture: Fixture) => ({
+                    ...fixture,
+                    date: new Date(fixture.date),
+                })
+            )
 
             const firstMonday = getLastMonday(fixtureList[0]?.date)
 
@@ -21,10 +26,7 @@ export function useFixtureList() {
             let fixtureWeekCount = 0
 
             for (const fixture of fixtureList) {
-                const calendarWeek = getWeeksBetween(
-                    firstMonday,
-                    new Date(fixture.date)
-                )
+                const calendarWeek = getWeeksBetween(firstMonday, fixture.date)
 
                 if (!gameCalendarWeeks.has(calendarWeek)) {
                     gameCalendarWeeks.set(calendarWeek, fixtureWeekCount)
@@ -35,12 +37,12 @@ export function useFixtureList() {
 
                 if (!currentWeek) {
                     fixtures.set(week, {
-                        firstDate: new Date(fixture.date),
-                        lastDate: new Date(fixture.date),
+                        firstDate: fixture.date,
+                        lastDate: fixture.date,
                         fixtures: [fixture],
                     })
                 } else {
-                    const currentDate = new Date(fixture.date)
+                    const currentDate = fixture.date
 
                     if (currentDate < currentWeek.firstDate) {
                         currentWeek.firstDate = currentDate
