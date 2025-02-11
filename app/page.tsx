@@ -1,5 +1,5 @@
-'use client'
 import Card from '@/components/card'
+import Fixtures from '@/components/fixtures'
 import { AllFlags } from '@/components/flag'
 import Table from '@/components/table'
 import Image from 'next/image'
@@ -7,7 +7,7 @@ import Image from 'next/image'
 export default function Home() {
     return (
         <div>
-            <div className='w-full bg-background p-8  flex shadow-md'>
+            <div className='w-full bg-background p-4  flex shadow-md'>
                 <h1 className='font-extrabold text-2xl flex justify-center items-center'>
                     <Image
                         src='/img/RugbyStat.png'
@@ -26,8 +26,8 @@ export default function Home() {
                     RugbyStat
                 </h1>
             </div>
-            <div className='w-full grid  md:grid-cols-2 grid-cols-1 gap-6 pt-8 lg:px-32 sm:px-16 px-8 justify-items-center'>
-                <Card className='w-full bg-background  md:col-span-2 flex'>
+            <div className='w-full grid xl:grid-cols-5 md:grid-cols-2 grid-cols-1 gap-6 pt-8 xl:px-64 lg:px-32 sm:px-16 px-2 justify-items-center'>
+                <Card className='w-full bg-background xl:col-span-5 md:col-span-2 flex'>
                     <Image
                         src='/img/URC.png'
                         alt='URC logo'
@@ -42,11 +42,13 @@ export default function Home() {
                     </div>
                 </Card>
 
-                <Card>
+                <Card className='xl:col-span-3'>
                     <h2 className='p-2'>Table</h2>
                     <Table />
                 </Card>
-                <Card>Fixtures & Results </Card>
+                <Card className='xl:col-span-2'>
+                    Fixtures & Results <Fixtures />{' '}
+                </Card>
             </div>
             <footer className='row-start-3 flex gap-6 flex-wrap items-center justify-center'></footer>
         </div>
