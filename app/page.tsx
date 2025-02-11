@@ -1,10 +1,13 @@
+'use client'
 import Card from '@/components/card'
 import Fixtures from '@/components/fixtures'
 import { AllFlags } from '@/components/flag'
 import Table from '@/components/table'
 import Image from 'next/image'
+import { useState } from 'react'
 
 export default function Home() {
+    const [selected, setSelected] = useState('table')
     return (
         <div>
             <div className='w-full bg-background p-4  flex shadow-md'>
@@ -42,12 +45,40 @@ export default function Home() {
                     </div>
                 </Card>
 
-                <Card className='xl:col-span-3'>
-                    <h2 className='p-2'>Table</h2>
+                <Card
+                    className={`${selected === 'table' ? '' : 'md:block hidden'} xl:col-span-3`}
+                >
+                    <h2 className='p-2 md:block hidden'>Table</h2>
+                    <div className='px-2 md:hidden flex justify-start gap-4 w-full'>
+                        <button className='p-2 underline font-bold'>
+                            Table
+                        </button>
+                        <button
+                            className='p-2'
+                            onClick={() => setSelected('fixtures')}
+                        >
+                            Fixtures & Results
+                        </button>
+                    </div>
+
                     <Table />
                 </Card>
-                <Card className='xl:col-span-2'>
-                    Fixtures & Results <Fixtures />{' '}
+                <Card
+                    className={`${selected === 'fixtures' ? '' : 'md:block hidden'} xl:col-span-2`}
+                >
+                    <div className='px-2 md:hidden flex justify-start gap-4 w-full'>
+                        <button
+                            className='p-2'
+                            onClick={() => setSelected('table')}
+                        >
+                            Table
+                        </button>
+                        <button className='p-2 underline font-bold'>
+                            Fixtures & Results
+                        </button>
+                    </div>
+
+                    <Fixtures />
                 </Card>
             </div>
             <footer className='row-start-3 flex gap-6 flex-wrap items-center justify-center'></footer>
