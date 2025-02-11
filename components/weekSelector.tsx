@@ -18,7 +18,7 @@ export default function WeekSelector({
         })
 
     return (
-        <div className='flex w-2/3 items-center justify-between self-center p-2'>
+        <div className='flex sm:w-2/3 w-5/6 items-center justify-between self-center p-2'>
             <button
                 onClick={() => {
                     if (selectedWeek > 0) setSelectedWeek(selectedWeek - 1)
